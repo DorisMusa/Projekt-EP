@@ -1,0 +1,191 @@
+<header style="width:100%;padding:20px;">
+  <h1 class="m-subheader__title" style="text-align:center; font-style: oblique; color:indianred; font-family:Georgia, 'Times New Roman', Times, serif;">Prikaz svih termina</h1>
+</header>
+<div class="m-content">
+<div class="m-portlet m-portlet--mobile" style="background-color: rgba(247, 239, 229, 0.8);">
+<div class="m-portlet__head">
+  <div class="m-portlet__head-caption" style="width:100%;padding-top:15px;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+          <ul class="m-portlet__nav" style="float:left;list-style-type:none;">
+            <li class="m-portlet__nav-item">
+              <a data-toggle="modal" data-target="#m_modal_6" class="btn btn-icon m-btn--pill" style="background-color: #AEF400">
+                <span>
+                  <span class="icon icon-sm fa fa-plus-circle"></span>
+                    <span class="btn-icon-label"> Kreiranje novog termina</span>                  
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="m-portlet__body" style="color:indianred;">
+  <div id="m_table_1_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Tražilica" [(ngModel)]="term" style="width:150px; border-radius: 20px;">
+      </div>
+        <table
+          class="table table-striped table-striped-table-bordered table-checkable dataTable no-footer dtr-inline"
+          id="m_table_1" role="grid" aria-describedby="m_table_1_info"
+          style="width: 1500px;text-align: center; vertical-align: middle;">
+          <thead>
+            <tr role="row">
+              <th class="sorting" tabindex="0" aria-controls="m_table_1" rowspan="1" colspan="1">NAZIV</th>
+              <th class="sorting" tabindex="0" aria-controls="m_table_1" rowspan="1" colspan="1">DETALJI</th>
+              <th class="sorting" tabindex="0" aria-controls="m_table_1" rowspan="1" colspan="1">PARTICIPANTI</th>
+              <th class="sorting" tabindex="0" aria-controls="m_table_1" rowspan="1" colspan="1">BRISANJE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr role="row" class="odd" *ngFor="let obj of termini | filter: term | paginate: {id: 'listing_pagination',
+            itemsPerPage: 10, currentPage:page, totalItems:totalRecords }">
+              <td>{{obj.fields.KEYWORD}}</td>             
+              <td>
+                <a (click)="preview(obj)" data-toggle="modal" data-target="#m_modal_7"
+                  class="m-portlet__nav-link btn m-btn m-btn--icon m-btn--icon-only m-btn--pill"
+                  title="Prikazi detalje" style="background-color: #99FFFF">
+                  <i class="la la-list"></i>
+                </a>
+              </td>
+              <td>
+                <a href="participanti/{{obj.fields.GGUID}}"
+                  class="m-portlet__nav-link btn m-btn m-btn--icon m-btn--icon-only m-btn--pill" style="background-color: #FFFF99"
+                  title="Prikazi participante">
+                  <i class="la la-user"></i>
+                </a>
+              </td>       
+              <td>
+                <a (click)="delete(obj.fields.GGUID)"
+                  class="m-portlet__nav-link btn m-btn  m-btn--icon m-btn--icon-only m-btn--pill" style="background-color: #FC8357"
+                  title="Izbrisi termin">
+                  <i class="la la-eraser"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+          <pagination-controls id="listing_pagination" style="text-align: center" maxSize="6" directionlinks="true" (pageChange)="page=$event"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="m_modal_6" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalCenterTitle" style="display: none;">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content" style="background-color: rgba(247, 239, 229, 0.8);">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLongTitle" style="color:indianred; font-style: oblique;">Novi termin</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="m_table_1_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+       
+        <div class="row" style="margin-top:10px">
+          <div class="col-sm-12">
+            <input type="text" placeholder="Naziv" class="form-control m-input" [ngModel]="termin.fields.KEYWORD"
+              (ngModelChange)="termin.fields.KEYWORD = $event;">
+          </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <div class="col-sm-12">
+            <input type="text" placeholder="Lokacija" class="form-control m-input" [ngModel]="termin.fields.GISDESCRIPTION"
+              (ngModelChange)="termin.fields.GISDESCRIPTION = $event;">
+          </div>
+        </div>         
+        <div class="input-group date" style="margin-top: 10px;">
+          <input type="text" style="background-color: white;" placeholder="Datum početka " class="form-control m-input"
+            [ngModel]="termin.fields.START_DT" (ngModelChange)="termin.fields.START_DT = $event;" 
+            readonly="" id="m_datetimepicker_1">
+          <div class="input-group-append" style="background-color: white;">
+            <span class="input-group-text">
+              <i class="la la-calendar glyphicon-th"></i>
+            </span>
+          </div>
+          <div class="input-group date" style="margin-top: 10px;">
+            <input type="text" style="background-color: white;" placeholder="Datum završetka" class="form-control m-input"
+              [ngModel]="termin.fields.END_DT" (ngModelChange)="termin.fields.END_DT = $event;"
+              readonly="" id="m_datetimepicker_2">
+            <div class="input-group-append" style="background-color: white;">
+              <span class="input-group-text">
+                <i class="la la-calendar glyphicon-th"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" (click)="insert()" class="btn btn-primary" data-dismiss="modal">Spremi</button>
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="m_modal_7" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalCenterTitle" style="display: none;">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content" style="background-color: rgba(247, 239, 229, 0.8);">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLongTitle" style="color:indianred; font-style: oblique;">Pregled</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="m_table_1_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+        <div class="row" style="margin-top:10px">
+          <div class="col-sm-12">
+            <input type="text" placeholder="Naziv" class="form-control m-input"
+              [ngModel]="terminPreview.fields.KEYWORD" disabled>
+          </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <div class="col-sm-12">
+            <input type="text" placeholder="Lokacija" class="form-control m-input"
+              [ngModel]="terminPreview.fields.GISDESCRIPTION" disabled>
+          </div>
+        </div>  
+        <div class="input-group date" style="margin-top: 10px">
+          <input type="text" placeholder="Datum početka " class="form-control m-input"
+            [ngModel]="terminPreview.fields.START_DT | date:'yyyy/MM/dd HH:mm'" disabled id="m_datetimepicker_1">
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <i class="la la-calendar glyphicon-th"></i>
+            </span>
+          </div>
+          <div class="input-group date" style="margin-top: 10px">
+            <input type="text" placeholder="Datum završetka" class="form-control m-input"
+              [ngModel]="terminPreview.fields.END_DT | date:'yyyy/MM/dd HH:mm'"  disabled
+              id="m_datetimepicker_2">
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <i class="la la-calendar glyphicon-th"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<footer style="margin-bottom:20px; text-align:center; color:indianred; font-size: medium; font-family:Georgia, 'Times New Roman', Times, serif;"><hr>
+<h5>Projekt iz kolegija <i>Elektroničko poslovanje</i></h5>
+<h6>Marija Marušić i Doris Musa</h6>
+</footer>
+<div *ngIf="" class="modal-backdrop fade show"></div>
+
+
+
+

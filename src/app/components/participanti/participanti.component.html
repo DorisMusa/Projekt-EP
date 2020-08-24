@@ -1,0 +1,53 @@
+<header style="width:100%;padding:20px;">
+  <h2 class="m-subheader__title" style="text-align:center; font-style: oblique; color:indianred; font-family:Georgia,
+   'Times New Roman', Times, serif;">Participanati za termin:</h2>
+   <h2 class="m-subheader__title" style="text-align:center; font-style: oblique; color:indianred; font-family:Georgia,
+   'Times New Roman', Times, serif;">{{this.termin.fields.KEYWORD}}</h2>
+</header>
+  <div class="d-flex align-items-center">  
+</div>
+<div class="m-content">
+  <div class="m-portlet m-portlet--mobile" style="background-color: rgba(247, 239, 229, 0.8);">   
+    <div class="m-portlet__body" style="color:indianred;">      
+         <div id="m_table_1_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+        <div class="row">
+          <div class="col-sm-12">
+            <table
+              class="table table-striped table-striped-table-bordered table-checkable dataTable no-footer dtr-inline"
+              id="m_table_1" role="grid" aria-describedby="m_table_1_info"
+              style="width: 1288px;text-align: center; vertical-align: middle;">
+              <thead>
+                <tr role="row">
+                  <th class="sorting" tabindex="0" aria-controls="m_table_1" rowspan="1" colspan="1">REDNI BROJ</th>
+                  <th class="sorting" tabindex="0" aria-controls="m_table_1" rowspan="1" colspan="1">Prikaz participanata</th>
+                  <th class="sorting" style="width:200px" tabindex="0" aria-controls="m_table_1" rowspan="1" colspan="1">Brisanje participanata</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr role="row" class="odd" *ngFor="let obj of participanti ;let ind = index">
+                  <td>{{ind+1}}</td>
+                  <td nowrap="">
+                    {{obj.fields.DISPLAYNAME}}
+                  </td>  
+                   <td>
+                    <a (click)="delete(obj.fields.PARTICIPANTGGUID)" data-toggle="modal" data-target="#m_modal_7"
+                    class="m-portlet__nav-link btn m-btn  m-btn--icon m-btn--icon-only m-btn--pill" style="background-color: #FC8357"
+                      title="Izbrisi participanta">
+                      <i class="la la-eraser"></i>
+                    </a>
+                  </td>               
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+  </div>
+  <footer style="margin-bottom:20px; text-align:center; font-size: medium; color:indianred; font-family:Georgia, 'Times New Roman', Times, serif;"><hr>
+    <h5>Projekt iz kolegija <i>Elektroničko poslovanje</i></h5>
+    <h6>Marija Marušić i Doris Musa</h6>
+    </footer>
+
+  <div *ngIf="" class="modal-backdrop fade show"></div>
